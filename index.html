@@ -109,7 +109,7 @@ justify-content:
 space-between;
 
 align-items:
-center; /* تم التعديل لتتوازى العناصر أفقياً بشكل أجمل */
+center;
 
 margin-bottom:
 14px;
@@ -128,7 +128,7 @@ object-fit:contain;
 
 display:flex;
 
-flex-direction:row; /* تحويلها إلى صف ليحتوي التاريخ بجانب الأيقونة الجديدة */
+flex-direction:row;
 
 align-items:center;
 
@@ -160,7 +160,7 @@ color:#A0A09D;
 
 }
 
-/* أيقونة القائمة الجانبية الجديدة في أعلى اليسار */
+/* أيقونة القائمة الجانبية */
 .menu-btn {
 background: none;
 border: none;
@@ -1077,7 +1077,7 @@ const num = Number(value);
 return isNaN(num) ? 0 : num;
 }
 
-// دالة التحكم بالقائمة
+// دالة التحكم بالقائمة مع تجميد السكرول بالصفحة الخلفية
 function toggleSidebar(show) {
 const sidebar = document.getElementById('sidebar');
 const overlay = document.getElementById('sidebarOverlay');
@@ -1085,9 +1085,11 @@ const overlay = document.getElementById('sidebarOverlay');
 if (show) {
 sidebar.classList.add('active');
 overlay.classList.add('active');
+document.body.style.overflowY = 'hidden'; // تجميد الصفحة ومنع الحركة للأعلى أو الأسفل
 } else {
 sidebar.classList.remove('active');
 overlay.classList.remove('active');
+document.body.style.overflowY = 'auto'; // إعادة التمرير لطبيعته بعد الإغلاق
 }
 }
 
