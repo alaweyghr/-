@@ -109,18 +109,11 @@ justify-content:
 space-between;
 
 align-items:
-flex-start;
+center; /* تم التعديل لتتوازى العناصر أفقياً بشكل أجمل */
 
 margin-bottom:
 14px;
 
-}
-
-.logo-btn{
-background: none;
-border: none;
-cursor: pointer;
-padding: 0;
 }
 
 .logo{
@@ -135,14 +128,20 @@ object-fit:contain;
 
 display:flex;
 
+flex-direction:row; /* تحويلها إلى صف ليحتوي التاريخ بجانب الأيقونة الجديدة */
+
+align-items:center;
+
+gap:12px;
+
+}
+
+.date-text-wrapper {
+display:flex;
 flex-direction:column;
-
-gap:6px;
-
+gap:4px;
 align-items:flex-start;
-
 text-align:left;
-
 }
 
 .today-date{
@@ -159,6 +158,27 @@ font-size:9px;
 
 color:#A0A09D;
 
+}
+
+/* أيقونة القائمة الجانبية الجديدة في أعلى اليسار */
+.menu-btn {
+background: none;
+border: none;
+cursor: pointer;
+display: flex;
+flex-direction: column;
+gap: 4px;
+padding: 4px;
+z-index: 1000;
+}
+
+.menu-btn span {
+display: block;
+width: 18px;
+height: 2px;
+background-color: #5A5A57;
+border-radius: 2px;
+transition: 0.25s;
 }
 
 /* =========================
@@ -626,10 +646,9 @@ text-align:center;
 }
 
 /* =========================
-SIDEBAR (القائمة الجانبية المضافة)
+SIDEBAR (القائمة الجانبية)
 ========================== */
 
-/* الخلفية الشفافة خلف القائمة */
 .sidebar-overlay {
 position: fixed;
 top: 0;
@@ -648,14 +667,13 @@ opacity: 1;
 visibility: visible;
 }
 
-/* جسم القائمة الجانبية يسار الشاشة */
 .sidebar {
 position: fixed;
 top: 0;
-left: -280px; /* مخفية خارج الشاشة يساراً */
+left: -280px;
 width: 260px;
 height: 100vh;
-background: #D9D9D6; /* لون متناسق مع تصميمك */
+background: #D9D9D6;
 border-top-right-radius: 40px;
 border-bottom-right-radius: 40px;
 z-index: 1001;
@@ -666,15 +684,14 @@ align-items: center;
 gap: 20px;
 box-shadow: 4px 0 24px rgba(0,0,0,0.15);
 transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-direction: ltr; /* لترتيب محتوى النص الإنجليزي والأيقونات */
+direction: ltr;
 text-align: left;
 }
 
 .sidebar.active {
-left: 0; /* تظهر عند التفعيل */
+left: 0;
 }
 
-/* زر الإغلاق (X) */
 .close-btn {
 position: absolute;
 top: 20px;
@@ -693,7 +710,6 @@ justify-content: center;
 align-items: center;
 }
 
-/* أيقونة حوجن أو المصمم في القائمة */
 .sidebar-designer-icon {
 width: 50px;
 height: 50px;
@@ -713,7 +729,6 @@ font-weight: 400;
 color: #7B7B78;
 }
 
-/* نص الرسالة في القائمة */
 .sidebar-content {
 font-size: 11px;
 line-height: 1.6;
@@ -734,7 +749,7 @@ padding-right: 5px;
 <div id="sidebar" class="sidebar">
 <button class="close-btn" onclick="toggleSidebar(false)">×</button>
 
-<img class="sidebar-designer-icon" src="https://raw.githubusercontent.com/alaweyghr/jnazh/2af6dc1b9e5c1be338783f175a93e328410249ee/%D9%84%D9%8ق%D8%B7%D9%8I%20%D8%B4%D8%A7%D8%B4%D8%A9%202026-05-07%20094914%20(1).png" alt="Designer">
+<img class="sidebar-designer-icon" src="https://raw.githubusercontent.com/alaweyghr/jnazh/2af6dc1b9e5c1be338783f175a93e328410249ee/%D9%84%D9%82%D8%B7%D8%A9%20%D8%B4%D8%A7%D8%B4%D8%A9%202026-05-07%20094914%20(1).png" alt="Designer">
 
 <div class="designer-title">ELIY <span>designer</span></div>
 
@@ -751,23 +766,20 @@ If your Plus membership has not yet expired, we will refund the remaining unused
 
 <div class="top">
 
-<button class="logo-btn" onclick="toggleSidebar(true)">
-<img class="logo" src="https://raw.githubusercontent.com/alaweyghr/jnazh/2af6dc1b9e5c1be338783f175a93e328410249ee/%D9%84%D9%8ق%D8%B7%D9%8I%20%D8%B4%D8%A7%D8%B4%D8%A9%202026-05-07%20094914%20(1).png">
-</button>
+<img class="logo" src="https://raw.githubusercontent.com/alaweyghr/jnazh/2af6dc1b9e5c1be338783f175a93e328410249ee/%D9%84%D9%82%D8%B7%D8%A9%20%D8%B4%D8%A7%D8%B4%D8%A9%202026-05-07%20094914%20(1).png">
 
 <div class="header-left">
 
-<div
-id="today-date"
-class="today-date">
---
+<div class="date-text-wrapper">
+<div id="today-date" class="today-date">--</div>
+<div id="last-update" class="last-update">--</div>
 </div>
 
-<div
-id="last-update"
-class="last-update">
---
-</div>
+<button class="menu-btn" onclick="toggleSidebar(true)">
+<span></span>
+<span></span>
+<span></span>
+</button>
 
 </div>
 
@@ -1065,7 +1077,7 @@ const num = Number(value);
 return isNaN(num) ? 0 : num;
 }
 
-// دالة التحكم في إظهار وإخفاء القائمة الجانبية
+// دالة التحكم بالقائمة
 function toggleSidebar(show) {
 const sidebar = document.getElementById('sidebar');
 const overlay = document.getElementById('sidebarOverlay');
