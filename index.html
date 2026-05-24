@@ -9,7 +9,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes"/>
     <meta name="apple-mobile-web-app-status-bar-style" content="default"/>
     <meta name="apple-mobile-web-app-title" content="روح"/>
-    <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/alaweyghr/jnazh/2af6dc1b9e5c1be338783f175a93e328410249ee/%D9%84%D9%82%D8%B7%D8%A9%20%D8%B4%D8%A7%D8%B4%D8%A9%202026-05-07%20094914%20(1).png">
+    <link rel="apple-touch-icon" href="https://z-cdn-media.chatglm.cn/files/0b71eec2-55b2-4775-aee9-817014696ccb.png?auth_key=1879594794791-c78936faa25e4e4886f4a57c065832f9-0-1f4716abd491ece66103dbce8ff5080f">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
@@ -34,8 +34,7 @@
             --overlay: rgba(0,0,0,0.2);
             --shadow: rgba(0,0,0,0.08);
             --theme-color: #ECECE9;
-            --logo-filter: none;
-            --dot-glow: rgba(225,201,143,0.4);
+            --menu-color: #3F3F3C;
         }
 
         [data-theme="dark"]{
@@ -59,8 +58,7 @@
             --overlay: rgba(0,0,0,0.5);
             --shadow: rgba(0,0,0,0.3);
             --theme-color: #131316;
-            --logo-filter: invert(0.33) brightness(1.1);
-            --dot-glow: rgba(212,188,122,0.35);
+            --menu-color: #C4A882;
         }
 
         *{
@@ -109,8 +107,7 @@
         .logo{
             width:82px;
             object-fit:contain;
-            filter: var(--logo-filter);
-            transition: filter 0.35s ease;
+            transition: opacity 0.3s ease;
         }
 
         .header-left{
@@ -155,7 +152,7 @@
             display: block;
             width: 18px;
             height: 2px;
-            background-color: var(--text-sec);
+            background-color: var(--menu-color);
             border-radius: 2px;
             transition: background-color 0.35s ease;
         }
@@ -214,12 +211,20 @@
             box-shadow: 0 0 6px var(--dot-glow);
         }
 
+        [data-theme="light"] .prayer-dot{
+            --dot-glow: rgba(225,201,143,0.4);
+        }
+
+        [data-theme="dark"] .prayer-dot{
+            --dot-glow: rgba(212,188,122,0.35);
+        }
+
         .prayer-dot.visible{
             transform: translateX(-50%) scale(1);
         }
 
         .top-tabs{
-            margin-bottom:1px;
+            margin-bottom:18px;
             height:54px;
             background: var(--card);
             border-radius:16px;
@@ -264,7 +269,7 @@
         .section-title{
             display:flex;
             justify-content:flex-start;
-            margin-bottom:8px;
+            margin-bottom:1px;
             direction:rtl;
             text-align:right;
             width:100%;
@@ -621,7 +626,7 @@
             width: 32px;
             height: 32px;
             border-radius: 50%;
-            background: var(--sidebar-close);
+            background: var(--menu-color);
             border: none;
             color: #FFF;
             font-size: 18px;
@@ -633,13 +638,16 @@
             transition: background 0.35s ease;
         }
 
+        [data-theme="dark"] .close-btn {
+            color: #131316;
+        }
+
         .sidebar-designer-icon {
             width: 50px;
             height: 50px;
             margin-top: 50px;
             object-fit: contain;
-            filter: var(--logo-filter);
-            transition: filter 0.35s ease;
+            transition: opacity 0.3s ease;
         }
 
         .designer-title {
@@ -709,7 +717,7 @@
 <div id="sidebarOverlay" class="sidebar-overlay" onclick="toggleSidebar(false)"></div>
 <div id="sidebar" class="sidebar">
     <button class="close-btn" onclick="toggleSidebar(false)">×</button>
-    <img class="sidebar-designer-icon" src="https://raw.githubusercontent.com/alaweyghr/jnazh/2af6dc1b9e5c1be338783f175a93e328410249ee/%D9%84%D9%82%D8%B7%D8%A9%20%D8%B4%D8%A7%D8%B4%D8%A9%202026-05-07%20094914%20(1).png" alt="Designer">
+    <img class="sidebar-designer-icon" id="sidebarLogo" src="https://z-cdn-media.chatglm.cn/files/0b71eec2-55b2-4775-aee9-817014696ccb.png?auth_key=1879594794791-c78936faa25e4e4886f4a57c065832f9-0-1f4716abd491ece66103dbce8ff5080f" alt="Designer">
     <div class="designer-title">ELIY <span>designer</span></div>
 
     <div class="theme-toggle-row">
@@ -731,7 +739,7 @@
 
 <div class="sticky-top">
     <div class="top">
-        <img class="logo" src="https://raw.githubusercontent.com/alaweyghr/jnazh/2af6dc1b9e5c1be338783f175a93e328410249ee/%D9%84%D9%82%D8%B7%D8%A9%20%D8%B4%D8%A7%D8%B4%D8%A9%202026-05-07%20094914%20(1).png">
+        <img class="logo" id="headerLogo" src="https://z-cdn-media.chatglm.cn/files/0b71eec2-55b2-4775-aee9-817014696ccb.png?auth_key=1879594794791-c78936faa25e4e4886f4a57c065832f9-0-1f4716abd491ece66103dbce8ff5080f">
         <div class="header-left">
             <div class="date-text-wrapper">
                 <div id="today-date" class="today-date">--</div>
@@ -944,6 +952,9 @@
 <script>
 const API_URL = "https://script.google.com/macros/s/AKfycbzBX9SOYeh4pbI5wLg25hMB7RXVfYPpUO7TQncgzo2MmYc5wK6xPUPLaEARR8U0i9hj/exec";
 
+const LOGO_LIGHT = "https://z-cdn-media.chatglm.cn/files/0b71eec2-55b2-4775-aee9-817014696ccb.png?auth_key=1879594794791-c78936faa25e4e4886f4a57c065832f9-0-1f4716abd491ece66103dbce8ff5080f";
+const LOGO_DARK = "https://z-cdn-media.chatglm.cn/files/96ebc5d4-1aa7-42f6-bb37-cb44b448230a.png?auth_key=1879594791-184199b338934399a01ea4bc62da7de0-0-8064bdf9b16bc157c1d78118676b1d4c";
+
 let prayerTimes = {
     fajr: "--:--",
     dhuhr: "--:--",
@@ -952,7 +963,6 @@ let prayerTimes = {
     isha: "--:--"
 };
 
-/* مفاتيح كل السويتشات اللي تنمسح يومياً */
 const dailyKeys = [
     "ayat-kursi-fajr",
     "ayat-kursi-dhuhr",
@@ -986,50 +996,26 @@ function updateDots(){
 ========================= */
 function checkDailyReset(){
     if(prayerTimes.fajr === "--:--") return;
-
     const now = new Date();
-
-    /* وقت الفجر لهذا اليوم */
     let fajrToday = createDateFromTime(prayerTimes.fajr, false);
-
-    /* إذا الوقت الحالي بعد منتصف الليل وقبل فجر اليوم الحالي
-       نعتبر الفجر هو فجر الغد */
     if(now >= fajrToday){
-        /* الفجر القادم هو بكرة */
         fajrToday = createDateFromTime(prayerTimes.fajr, true);
     }
-
-    /* وقت المسح = الفجر - 30 دقيقة */
     const resetTime = new Date(fajrToday.getTime() - (30 * 60 * 1000));
-
-    /* تاريخ آخر مسح مخزن */
     const lastReset = localStorage.getItem("last-daily-reset");
-
-    /* تاريخ اليوم بصيغة YYYY-MM-DD */
     const todayStr = now.getFullYear() + "-" +
         String(now.getMonth() + 1).padStart(2, "0") + "-" +
         String(now.getDate()).padStart(2, "0");
-
-    /*
-        إذا وصلنا وقت المسح ولم نمسح اليوم
-        مثال: الفجر 4:30 → المسح 4:00
-        إذا الساعة 4:05 وآخر مسح كان أمس → امسح
-    */
     if(now >= resetTime && lastReset !== todayStr){
         dailyReset(todayStr);
     }
 }
 
 function dailyReset(todayStr){
-    /* مسح كل القيم من localStorage */
     dailyKeys.forEach((key) => {
         localStorage.removeItem(key);
     });
-
-    /* تسجيل تاريخ المسح */
     localStorage.setItem("last-daily-reset", todayStr);
-
-    /* إلغاء تحديد كل السويتشات في الصفحة */
     const switches = document.querySelectorAll(".switch input[data-key]");
     switches.forEach((sw) => {
         const key = sw.getAttribute("data-key");
@@ -1037,8 +1023,6 @@ function dailyReset(todayStr){
             sw.checked = false;
         }
     });
-
-    /* إخفاء كل النقاط */
     updateDots();
 }
 
@@ -1048,13 +1032,14 @@ function safeNumber(value){
 }
 
 /* =========================
-   تبديل المظهر
+   تبديل المظهر مع تبديل اللوغو
 ========================= */
 function toggleTheme(el){
     const isDark = el.checked;
     document.documentElement.setAttribute("data-theme", isDark ? "dark" : "light");
     document.querySelector('meta[name="theme-color"]').content = isDark ? "#131316" : "#ECECE9";
     localStorage.setItem("theme", isDark ? "dark" : "light");
+    swapLogos(isDark);
 }
 
 function loadTheme(){
@@ -1063,6 +1048,23 @@ function loadTheme(){
     document.documentElement.setAttribute("data-theme", isDark ? "dark" : "light");
     document.querySelector('meta[name="theme-color"]').content = isDark ? "#131316" : "#ECECE9";
     document.getElementById("themeSwitch").checked = isDark;
+    swapLogos(isDark);
+}
+
+function swapLogos(isDark){
+    const src = isDark ? LOGO_DARK : LOGO_LIGHT;
+    const headerLogo = document.getElementById("headerLogo");
+    const sidebarLogo = document.getElementById("sidebarLogo");
+    /* تأثير اختفاء سريع */
+    headerLogo.style.opacity = "0";
+    sidebarLogo.style.opacity = "0";
+    /* بعد الاختفاء نبدّل المصدر ونظهر */
+    setTimeout(() => {
+        headerLogo.src = src;
+        sidebarLogo.src = src;
+        headerLogo.style.opacity = "1";
+        sidebarLogo.style.opacity = "1";
+    }, 150);
 }
 
 /* =========================
@@ -1146,10 +1148,6 @@ async function loadData(){
     }
 }
 
-/* =========================
-   RIYADH PRAYER TIMES
-========================= */
-
 async function fetchPrayerTimes(){
     try{
         const url = "https://api.aladhan.com/v1/timingsByCity?city=Riyadh&country=Saudi%20Arabia&method=4";
@@ -1174,7 +1172,6 @@ async function fetchPrayerTimes(){
         document.getElementById("isha-time").textContent =
             format12Hour(createDateFromTime(prayerTimes.isha));
         updateImportantTimes();
-        /* بعد جلب أوقات الصلاة نتحقق من المسح اليومي */
         checkDailyReset();
     }catch(error){
         console.error("Prayer API Error:",error);
@@ -1223,10 +1220,6 @@ function format12Hour(date){
     return `${String(h).padStart(2,"0")}:${String(m).padStart(2,"0")}`;
 }
 
-/* =========================
-   MIDNIGHT + LAST THIRD
-========================= */
-
 function updateImportantTimes(){
     if(prayerTimes.maghrib === "--:--") return;
     const now = new Date();
@@ -1245,7 +1238,7 @@ function updateImportantTimes(){
     document.getElementById("midnight-time").textContent =
         format12Hour(midnight);
     document.getElementById("third-time").textContent =
-        format12Holiday(lastThird);
+        format12Hour(lastThird);
     let midnightDiff = 0;
     if(now >= isha && now <= midnight){
         midnightDiff = midnight.getTime() - now.getTime();
@@ -1292,7 +1285,6 @@ setInterval(updateDate,1000);
 setInterval(updateImportantTimes,1000);
 setInterval(loadData,30000);
 setInterval(fetchPrayerTimes,3600000);
-/* فحص المسح اليومي كل 30 ثانية */
 setInterval(checkDailyReset,30000);
 </script>
 
