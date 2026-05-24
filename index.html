@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" data-theme="light">
 
 <head>
     <meta charset="UTF-8"/>
@@ -10,9 +10,59 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default"/>
     <meta name="apple-mobile-web-app-title" content="روح"/>
     <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/alaweyghr/jnazh/2af6dc1b9e5c1be338783f175a93e328410249ee/%D9%84%D9%82%D8%B7%D8%A9%20%D8%B4%D8%A7%D8%B4%D8%A9%202026-05-07%20094914%20(1).png">
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght=400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
+        :root{
+            --bg: #ECECE9;
+            --card: #F4F4F2;
+            --card-inner: #ECEBE8;
+            --tab-active: #ECE7D8;
+            --text-main: #3F3F3C;
+            --text-sec: #5A5A57;
+            --text-third: #7B7B78;
+            --text-faded: #868682;
+            --text-muted: #A0A09D;
+            --progress-bg: #E6E6E3;
+            --gold: #E1C98F;
+            --blue: #B6CEDF;
+            --purple: #9191C5;
+            --switch-off: #D0D0CD;
+            --switch-on: #B6CEDF;
+            --sidebar-bg: #D9D9D6;
+            --sidebar-close: #B5B5B2;
+            --overlay: rgba(0,0,0,0.2);
+            --shadow: rgba(0,0,0,0.08);
+            --theme-color: #ECECE9;
+            --logo-filter: none;
+            --dot-glow: rgba(225,201,143,0.4);
+        }
+
+        [data-theme="dark"]{
+            --bg: #131316;
+            --card: #1C1C21;
+            --card-inner: #242429;
+            --tab-active: #28282E;
+            --text-main: #E4E4E1;
+            --text-sec: #A8A8A4;
+            --text-third: #7D7D7A;
+            --text-faded: #6A6A67;
+            --text-muted: #555553;
+            --progress-bg: #2E2E34;
+            --gold: #D4BC7A;
+            --blue: #9BBDD4;
+            --purple: #8585B8;
+            --switch-off: #3A3A40;
+            --switch-on: #9BBDD4;
+            --sidebar-bg: #1A1A1F;
+            --sidebar-close: #3A3A40;
+            --overlay: rgba(0,0,0,0.5);
+            --shadow: rgba(0,0,0,0.3);
+            --theme-color: #131316;
+            --logo-filter: invert(0.33) brightness(1.1);
+            --dot-glow: rgba(212,188,122,0.35);
+        }
+
         *{
             margin:0;
             padding:0;
@@ -21,9 +71,9 @@
         }
 
         body{
-            background:#ECECE9;
+            background: var(--bg);
             font-family:'Cairo',sans-serif;
-            color:#3F3F3C;
+            color: var(--text-main);
             width:393px;
             height:852px;
             margin:auto;
@@ -32,28 +82,23 @@
             -webkit-overflow-scrolling:touch;
             direction:rtl;
             padding:16px 18px;
+            transition: background 0.35s ease, color 0.35s ease;
         }
 
-        /* =========================
-        STICKY TOP
-        ========================== */
         .sticky-top{
             position:sticky;
             top:0;
             z-index:999;
-            background:#ECECE9;
+            background: var(--bg);
             padding-top:6px;
             padding-bottom:14px;
-            transition:.25s;
+            transition: background 0.35s ease, box-shadow 0.25s ease;
         }
 
         .sticky-top.scrolled{
-            box-shadow: 0 8px 12px -6px rgba(0,0,0,.08);
+            box-shadow: 0 8px 12px -6px var(--shadow);
         }
 
-        /* =========================
-        HEADER
-        ========================== */
         .top{
             display:flex;
             justify-content: space-between;
@@ -64,6 +109,8 @@
         .logo{
             width:82px;
             object-fit:contain;
+            filter: var(--logo-filter);
+            transition: filter 0.35s ease;
         }
 
         .header-left{
@@ -83,12 +130,14 @@
 
         .today-date{
             font-size:10px;
-            color:#868682;
+            color: var(--text-faded);
+            transition: color 0.35s ease;
         }
 
         .last-update{
             font-size:9px;
-            color:#A0A09D;
+            color: var(--text-muted);
+            transition: color 0.35s ease;
         }
 
         .menu-btn {
@@ -106,25 +155,23 @@
             display: block;
             width: 18px;
             height: 2px;
-            background-color: #5A5A57;
+            background-color: var(--text-sec);
             border-radius: 2px;
-            transition: 0.25s;
+            transition: background-color 0.35s ease;
         }
 
-        /* =========================
-        PRAYER STRIP
-        ========================== */
         .prayer-strip{
             display:flex;
             justify-content: space-between;
             align-items:center;
             gap:8px;
             margin-bottom:18px;
-            background:#F4F4F2;
+            background: var(--card);
             padding:10px 12px;
             border-radius:16px;
             overflow-x:auto;
             scrollbar-width:none;
+            transition: background 0.35s ease;
         }
 
         .prayer-strip::-webkit-scrollbar{
@@ -137,32 +184,50 @@
             flex-direction:column;
             align-items:center;
             gap:4px;
+            position: relative;
         }
 
         .prayer-name{
             font-size:10px;
-            color:#7B7B78;
+            color: var(--text-third);
             font-weight:600;
+            transition: color 0.35s ease;
         }
 
         .prayer-time{
             font-size:13px;
             font-weight:700;
-            color:#444440;
+            color: var(--text-sec);
+            transition: color 0.35s ease;
         }
 
-        /* =========================
-        TOP TABS
-        ========================== */
+        .prayer-dot{
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--gold);
+            position: absolute;
+            top: -2px;
+            left: 50%;
+            transform: translateX(-50%) scale(0);
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.35s ease;
+            box-shadow: 0 0 6px var(--dot-glow);
+        }
+
+        .prayer-dot.visible{
+            transform: translateX(-50%) scale(1);
+        }
+
         .top-tabs{
-            margin-bottom:18px;
+            margin-bottom:1px;
             height:54px;
-            background:#F4F4F2;
+            background: var(--card);
             border-radius:16px;
             display:flex;
             justify-content:space-around;
             align-items:center;
             padding:0 6px;
+            transition: background 0.35s ease;
         }
 
         .tab-btn{
@@ -170,23 +235,20 @@
             background:none;
             font-family:'Cairo',sans-serif;
             font-size:13px;
-            color:#8B8B88;
+            color: var(--text-third);
             font-weight:600;
             cursor:pointer;
-            transition:.25s;
+            transition: all 0.25s ease;
             height:42px;
             padding:0 18px;
             border-radius:14px;
         }
 
         .tab-btn.active{
-            background:#ECE7D8;
-            color:#434340;
+            background: var(--tab-active);
+            color: var(--text-sec);
         }
 
-        /* =========================
-        PAGES
-        ========================== */
         .page{
             display:none;
         }
@@ -195,11 +257,8 @@
             display:block;
         }
 
-        /* =========================
-        SECTION
-        ========================== */
         .section{
-            margin-bottom:12px;
+            margin-bottom:1px;
         }
 
         .section-title{
@@ -214,19 +273,18 @@
         .section-title h2{
             font-size:18px;
             font-weight:500;
-            color:#5A5A57;
+            color: var(--text-sec);
+            transition: color 0.35s ease;
         }
 
-        /* =========================
-        CARD
-        ========================== */
         .card{
-            background:#F4F4F2;
+            background: var(--card);
             border-radius:16px;
             padding:11px;
             display:flex;
             gap:10px;
             direction:rtl;
+            transition: background 0.35s ease;
         }
 
         .value-box{
@@ -237,13 +295,14 @@
             align-items:center;
             font-size:38px;
             font-weight:700;
-            color:#434340;
+            color: var(--text-main);
             flex-shrink:0;
+            transition: background 0.35s ease, color 0.35s ease;
         }
 
-        .gold-box{ background:#E1C98F; }
-        .blue-box{ background:#B6CEDF; }
-        .purple-box{ background:#9191C5; }
+        .gold-box{ background: var(--gold); }
+        .blue-box{ background: var(--blue); }
+        .purple-box{ background: var(--purple); }
 
         .stats{
             flex:1;
@@ -264,33 +323,33 @@
             align-items:center;
             font-size:10px;
             direction:rtl;
+            color: var(--text-sec);
+            transition: color 0.35s ease;
         }
 
         .progress{
             width:100%;
             height:6px;
-            background:#E6E6E3;
+            background: var(--progress-bg);
             border-radius:999px;
             overflow:hidden;
             position:relative;
+            transition: background 0.35s ease;
         }
 
         .fill{
             height:100%;
             border-radius:999px;
-            transition:width .4s ease;
+            transition: width .4s ease, background 0.35s ease;
             position:absolute;
             right:0;
             width: 0%;
         }
 
-        .gold{ background:#E1C98F; }
-        .blue{ background:#B6CEDF; }
-        .purple{ background:#9191C5; }
+        .gold{ background: var(--gold); }
+        .blue{ background: var(--blue); }
+        .purple{ background: var(--purple); }
 
-        /* =========================
-        TIMES PAGE
-        ========================== */
         .time-wrapper{
             display:flex;
             flex-direction:column;
@@ -309,20 +368,23 @@
             justify-content: space-between;
             align-items:center;
             font-size:13px;
-            color:#535350;
+            color: var(--text-sec);
+            transition: color 0.35s ease;
         }
 
         .countdown-card{
-            background:#F4F4F2;
+            background: var(--card);
             border-radius:14px;
             padding:12px;
+            transition: background 0.35s ease;
         }
 
         .countdown-title{
             font-size:12px;
             margin-bottom:10px;
-            color:#4E4E4B;
+            color: var(--text-sec);
             text-align:right;
+            transition: color 0.35s ease;
         }
 
         .count-grid{
@@ -332,59 +394,190 @@
         }
 
         .time-box{
-            background:#ECEBE8;
+            background: var(--card-inner);
             border-radius:10px;
             padding:12px 8px;
             display:flex;
             flex-direction:column;
             align-items:center;
             gap:10px;
+            transition: background 0.35s ease;
         }
 
         .time-number{
             font-size:28px;
             font-weight:700;
-            color:#484844;
+            color: var(--text-main);
             line-height:1;
+            transition: color 0.35s ease;
         }
 
         .time-bar{
             width:100%;
             height:6px;
             border-radius:999px;
+            transition: background 0.35s ease;
         }
 
-        .bar-purple{ background:#9191C5; }
-        .bar-blue{ background:#B6CEDF; }
-        .bar-gold{ background:#E1C98F; }
+        .bar-purple{ background: var(--purple); }
+        .bar-blue{ background: var(--blue); }
+        .bar-gold{ background: var(--gold); }
 
-        /* =========================
-        WARD
-        ========================== */
-        .ward-page{
-            background:#F4F4F2;
-            border-radius:18px;
-            padding:24px;
-            display:flex;
-            justify-content:center;
-            align-items:center;
-            height:500px;
-            font-size:18px;
-            color:#8A8A87;
-            line-height:2;
-            text-align:center;
+        .ward-section {
+            margin-bottom: 20px;
         }
 
-        /* =========================
-        SIDEBAR
-        ========================== */
+        .ward-section-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-sec);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.35s ease;
+        }
+
+        .ward-section-title .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            transition: background 0.35s ease;
+        }
+
+        .dot-gold { background: var(--gold); }
+        .dot-blue { background: var(--blue); }
+        .dot-purple { background: var(--purple); }
+
+        .ward-card {
+            background: var(--card);
+            border-radius: 16px;
+            padding: 14px;
+            transition: background 0.35s ease;
+        }
+
+        .prayer-toggles-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .prayer-toggle-chip {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 12px;
+            background: var(--card-inner);
+            border-radius: 12px;
+            flex: 1;
+            min-width: 100px;
+            transition: background 0.35s ease;
+        }
+
+        .prayer-chip-name {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-sec);
+            white-space: nowrap;
+            transition: color 0.35s ease;
+        }
+
+        .toggle-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 16px;
+            background: var(--card-inner);
+            border-radius: 14px;
+            margin-bottom: 8px;
+            transition: background 0.35s ease;
+        }
+
+        .toggle-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .toggle-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-sec);
+            transition: color 0.35s ease;
+        }
+
+        .switch {
+            position: relative;
+            width: 42px;
+            height: 24px;
+            flex-shrink: 0;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--switch-off);
+            border-radius: 24px;
+            transition: background 0.25s ease;
+        }
+
+        .slider::before {
+            content: '';
+            position: absolute;
+            height: 20px;
+            width: 20px;
+            right: 2px;
+            bottom: 2px;
+            background: #fff;
+            border-radius: 50%;
+            transition: transform 0.25s ease;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+        }
+
+        .switch input:checked + .slider {
+            background: var(--switch-on);
+        }
+
+        .switch input:checked + .slider::before {
+            transform: translateX(-18px);
+        }
+
+        .prayer-toggle-chip .switch {
+            width: 36px;
+            height: 20px;
+        }
+
+        .prayer-toggle-chip .slider {
+            border-radius: 20px;
+        }
+
+        .prayer-toggle-chip .slider::before {
+            height: 16px;
+            width: 16px;
+            right: 2px;
+            bottom: 2px;
+        }
+
+        .prayer-toggle-chip .switch input:checked + .slider::before {
+            transform: translateX(-16px);
+        }
+
         .sidebar-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: rgba(0, 0, 0, 0.2);
+            background: var(--overlay);
             z-index: 1000;
             opacity: 0;
             visibility: hidden;
@@ -402,7 +595,7 @@
             left: -280px;
             width: 260px;
             height: 100vh;
-            background: #D9D9D6;
+            background: var(--sidebar-bg);
             border-top-right-radius: 40px;
             border-bottom-right-radius: 40px;
             z-index: 1010;
@@ -412,7 +605,7 @@
             align-items: center;
             gap: 20px;
             box-shadow: 4px 0 24px rgba(0,0,0,0.15);
-            transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1), background 0.35s ease;
             direction: ltr;
             text-align: left;
         }
@@ -428,7 +621,7 @@
             width: 32px;
             height: 32px;
             border-radius: 50%;
-            background: #B5B5B2;
+            background: var(--sidebar-close);
             border: none;
             color: #FFF;
             font-size: 18px;
@@ -437,6 +630,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            transition: background 0.35s ease;
         }
 
         .sidebar-designer-icon {
@@ -444,28 +638,68 @@
             height: 50px;
             margin-top: 50px;
             object-fit: contain;
+            filter: var(--logo-filter);
+            transition: filter 0.35s ease;
         }
 
         .designer-title {
             font-size: 14px;
             font-weight: 700;
-            color: #3F3F3C;
+            color: var(--text-main);
             font-family: 'Cairo', sans-serif;
+            transition: color 0.35s ease;
         }
 
         .designer-title span {
             font-weight: 400;
-            color: #7B7B78;
+            color: var(--text-third);
+            transition: color 0.35s ease;
         }
 
         .sidebar-content {
             font-size: 11px;
             line-height: 1.6;
-            color: #4E4E4B;
+            color: var(--text-sec);
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             margin-top: 10px;
             overflow-y: auto;
             padding-right: 5px;
+            transition: color 0.35s ease;
+        }
+
+        .theme-toggle-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            padding: 14px 16px;
+            background: var(--card-inner);
+            border-radius: 14px;
+            margin-top: 8px;
+            transition: background 0.35s ease;
+        }
+
+        .theme-toggle-label {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-sec);
+            font-family: 'Cairo', sans-serif;
+            direction: rtl;
+            transition: color 0.35s ease;
+        }
+
+        .theme-toggle-row .switch {
+            width: 44px;
+            height: 24px;
+        }
+
+        .theme-toggle-row .slider::before {
+            height: 20px;
+            width: 20px;
+        }
+
+        .theme-toggle-row .switch input:checked + .slider::before {
+            transform: translateX(-20px);
         }
     </style>
 </head>
@@ -477,6 +711,15 @@
     <button class="close-btn" onclick="toggleSidebar(false)">×</button>
     <img class="sidebar-designer-icon" src="https://raw.githubusercontent.com/alaweyghr/jnazh/2af6dc1b9e5c1be338783f175a93e328410249ee/%D9%84%D9%82%D8%B7%D8%A9%20%D8%B4%D8%A7%D8%B4%D8%A9%202026-05-07%20094914%20(1).png" alt="Designer">
     <div class="designer-title">ELIY <span>designer</span></div>
+
+    <div class="theme-toggle-row">
+        <span class="theme-toggle-label">الوضع الداكن</span>
+        <label class="switch">
+            <input type="checkbox" id="themeSwitch" onchange="toggleTheme(this)">
+            <span class="slider"></span>
+        </label>
+    </div>
+
     <div class="sidebar-content">
         We regret to inform you that this plugin will officially cease operations on February 04, 2026. Due to a continuous decline in user numbers and a significant imbalance between operational costs and revenue, we have made the difficult decision to discontinue this service after careful consideration. We sincerely appreciate your support and understanding.<br><br>
         <strong>Data Export</strong><br>
@@ -504,22 +747,27 @@
 
     <div class="prayer-strip">
         <div class="prayer-item">
+            <div class="prayer-dot" id="dot-fajr"></div>
             <div class="prayer-name">الفجر</div>
             <div id="fajr-time" class="prayer-time">--:--</div>
         </div>
         <div class="prayer-item">
+            <div class="prayer-dot" id="dot-dhuhr"></div>
             <div class="prayer-name">الظهر</div>
             <div id="dhuhr-time" class="prayer-time">--:--</div>
         </div>
         <div class="prayer-item">
+            <div class="prayer-dot" id="dot-asr"></div>
             <div class="prayer-name">العصر</div>
             <div id="asr-time" class="prayer-time">--:--</div>
         </div>
         <div class="prayer-item">
+            <div class="prayer-dot" id="dot-maghrib"></div>
             <div class="prayer-name">المغرب</div>
             <div id="maghrib-time" class="prayer-time">--:--</div>
         </div>
         <div class="prayer-item">
+            <div class="prayer-dot" id="dot-isha"></div>
             <div class="prayer-name">العشاء</div>
             <div id="isha-time" class="prayer-time">--:--</div>
         </div>
@@ -605,7 +853,92 @@
 </div>
 
 <div id="ward" class="page">
-    <div class="ward-page">قريباً<br>سيتم إضافة الورد اليومي</div>
+
+    <div class="ward-section">
+        <div class="ward-section-title">
+            <span class="dot dot-gold"></span>
+            آية الكرسي بعد كل صلاة
+        </div>
+        <div class="ward-card">
+            <div class="prayer-toggles-grid">
+                <div class="prayer-toggle-chip">
+                    <span class="prayer-chip-name">الفجر</span>
+                    <label class="switch">
+                        <input type="checkbox" data-key="ayat-kursi-fajr" data-prayer="fajr" onchange="saveToggle(this); updateDots()">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="prayer-toggle-chip">
+                    <span class="prayer-chip-name">الظهر</span>
+                    <label class="switch">
+                        <input type="checkbox" data-key="ayat-kursi-dhuhr" data-prayer="dhuhr" onchange="saveToggle(this); updateDots()">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="prayer-toggle-chip">
+                    <span class="prayer-chip-name">العصر</span>
+                    <label class="switch">
+                        <input type="checkbox" data-key="ayat-kursi-asr" data-prayer="asr" onchange="saveToggle(this); updateDots()">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="prayer-toggle-chip">
+                    <span class="prayer-chip-name">المغرب</span>
+                    <label class="switch">
+                        <input type="checkbox" data-key="ayat-kursi-maghrib" data-prayer="maghrib" onchange="saveToggle(this); updateDots()">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="prayer-toggle-chip">
+                    <span class="prayer-chip-name">العشاء</span>
+                    <label class="switch">
+                        <input type="checkbox" data-key="ayat-kursi-isha" data-prayer="isha" onchange="saveToggle(this); updateDots()">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="ward-section">
+        <div class="ward-section-title">
+            <span class="dot dot-blue"></span>
+            الأذكار
+        </div>
+        <div class="ward-card">
+            <div class="toggle-row">
+                <span class="toggle-label">أذكار الصباح</span>
+                <label class="switch">
+                    <input type="checkbox" data-key="adhkar-sabah" onchange="saveToggle(this)">
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <div class="toggle-row">
+                <span class="toggle-label">أذكار المساء</span>
+                <label class="switch">
+                    <input type="checkbox" data-key="adhkar-masa" onchange="saveToggle(this)">
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <div class="ward-section">
+        <div class="ward-section-title">
+            <span class="dot dot-purple"></span>
+            القرآن
+        </div>
+        <div class="ward-card">
+            <div class="toggle-row">
+                <span class="toggle-label">الورد اليومي</span>
+                <label class="switch">
+                    <input type="checkbox" data-key="quran-ward" onchange="saveToggle(this)">
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 <script>
@@ -619,35 +952,155 @@ let prayerTimes = {
     isha: "--:--"
 };
 
+/* مفاتيح كل السويتشات اللي تنمسح يومياً */
+const dailyKeys = [
+    "ayat-kursi-fajr",
+    "ayat-kursi-dhuhr",
+    "ayat-kursi-asr",
+    "ayat-kursi-maghrib",
+    "ayat-kursi-isha",
+    "adhkar-sabah",
+    "adhkar-masa",
+    "quran-ward"
+];
+
+/* =========================
+   النقاط الذهبية
+========================= */
+function updateDots(){
+    const prayers = ["fajr","dhuhr","asr","maghrib","isha"];
+    prayers.forEach((p) => {
+        const key = "ayat-kursi-" + p;
+        const isOn = localStorage.getItem(key) === "true";
+        const dot = document.getElementById("dot-" + p);
+        if(isOn){
+            dot.classList.add("visible");
+        }else{
+            dot.classList.remove("visible");
+        }
+    });
+}
+
+/* =========================
+   المسح اليومي قبل الفجر
+========================= */
+function checkDailyReset(){
+    if(prayerTimes.fajr === "--:--") return;
+
+    const now = new Date();
+
+    /* وقت الفجر لهذا اليوم */
+    let fajrToday = createDateFromTime(prayerTimes.fajr, false);
+
+    /* إذا الوقت الحالي بعد منتصف الليل وقبل فجر اليوم الحالي
+       نعتبر الفجر هو فجر الغد */
+    if(now >= fajrToday){
+        /* الفجر القادم هو بكرة */
+        fajrToday = createDateFromTime(prayerTimes.fajr, true);
+    }
+
+    /* وقت المسح = الفجر - 30 دقيقة */
+    const resetTime = new Date(fajrToday.getTime() - (30 * 60 * 1000));
+
+    /* تاريخ آخر مسح مخزن */
+    const lastReset = localStorage.getItem("last-daily-reset");
+
+    /* تاريخ اليوم بصيغة YYYY-MM-DD */
+    const todayStr = now.getFullYear() + "-" +
+        String(now.getMonth() + 1).padStart(2, "0") + "-" +
+        String(now.getDate()).padStart(2, "0");
+
+    /*
+        إذا وصلنا وقت المسح ولم نمسح اليوم
+        مثال: الفجر 4:30 → المسح 4:00
+        إذا الساعة 4:05 وآخر مسح كان أمس → امسح
+    */
+    if(now >= resetTime && lastReset !== todayStr){
+        dailyReset(todayStr);
+    }
+}
+
+function dailyReset(todayStr){
+    /* مسح كل القيم من localStorage */
+    dailyKeys.forEach((key) => {
+        localStorage.removeItem(key);
+    });
+
+    /* تسجيل تاريخ المسح */
+    localStorage.setItem("last-daily-reset", todayStr);
+
+    /* إلغاء تحديد كل السويتشات في الصفحة */
+    const switches = document.querySelectorAll(".switch input[data-key]");
+    switches.forEach((sw) => {
+        const key = sw.getAttribute("data-key");
+        if(dailyKeys.includes(key)){
+            sw.checked = false;
+        }
+    });
+
+    /* إخفاء كل النقاط */
+    updateDots();
+}
+
 function safeNumber(value){
     const num = Number(value);
     return isNaN(num) ? 0 : num;
 }
 
-function toggleSidebar(show){
+/* =========================
+   تبديل المظهر
+========================= */
+function toggleTheme(el){
+    const isDark = el.checked;
+    document.documentElement.setAttribute("data-theme", isDark ? "dark" : "light");
+    document.querySelector('meta[name="theme-color"]').content = isDark ? "#131316" : "#ECECE9";
+    localStorage.setItem("theme", isDark ? "dark" : "light");
+}
 
+function loadTheme(){
+    const saved = localStorage.getItem("theme");
+    const isDark = saved === "dark";
+    document.documentElement.setAttribute("data-theme", isDark ? "dark" : "light");
+    document.querySelector('meta[name="theme-color"]').content = isDark ? "#131316" : "#ECECE9";
+    document.getElementById("themeSwitch").checked = isDark;
+}
+
+/* =========================
+   حفظ واسترجاع التبديلات
+========================= */
+function saveToggle(el){
+    const key = el.getAttribute("data-key");
+    const val = el.checked;
+    localStorage.setItem(key, val);
+}
+
+function loadToggles(){
+    const switches = document.querySelectorAll(".switch input[data-key]");
+    switches.forEach((sw) => {
+        const key = sw.getAttribute("data-key");
+        const saved = localStorage.getItem(key);
+        if(saved !== null){
+            sw.checked = saved === "true";
+        }
+    });
+}
+
+function toggleSidebar(show){
     const sidebar = document.getElementById('sidebar');
     const overlay = document.getElementById('sidebarOverlay');
-
     if(show){
-
         sidebar.classList.add('active');
         overlay.classList.add('active');
         document.body.style.overflowY = 'hidden';
-
     }else{
-
         sidebar.classList.remove('active');
         overlay.classList.remove('active');
         document.body.style.overflowY = 'auto';
-
     }
 }
 
 function updateDate(){
-
     const now = new Date();
-
     const date = now.toLocaleDateString("ar-SA",{
         timeZone:"Asia/Riyadh",
         weekday:"long",
@@ -655,57 +1108,41 @@ function updateDate(){
         month:"long",
         day:"numeric"
     });
-
     const time = now.toLocaleTimeString("ar-SA",{
         timeZone:"Asia/Riyadh",
         hour:"2-digit",
         minute:"2-digit"
     });
-
     document.getElementById("today-date").textContent = date;
     document.getElementById("last-update").textContent = `آخر تحديث ${time}`;
 }
 
 function updatePrayer(prayer,data){
-
     const men = safeNumber(data.men);
     const women = safeNumber(data.women);
     const kids = safeNumber(data.kids);
     const total = safeNumber(data.total);
-
     const divisor = total > 0 ? total : 1;
-
     document.getElementById(`${prayer}-men`).textContent = men;
     document.getElementById(`${prayer}-women`).textContent = women;
     document.getElementById(`${prayer}-kids`).textContent = kids;
-
     document.getElementById(`${prayer}-total`).textContent = total;
-
     document.getElementById(`${prayer}-men-bar`).style.width = `${(men/divisor)*100}%`;
     document.getElementById(`${prayer}-women-bar`).style.width = `${(women/divisor)*100}%`;
     document.getElementById(`${prayer}-kids-bar`).style.width = `${(kids/divisor)*100}%`;
 }
 
 async function loadData(){
-
     try{
-
         const response = await fetch(API_URL);
-
         const rows = await response.json();
-
-        rows.forEach(row=>{
-
+        rows.forEach((row) => {
             if(row.prayerName === "الظهر") updatePrayer("zuhr",row);
             if(row.prayerName === "العصر") updatePrayer("asr",row);
             if(row.prayerName === "المغرب") updatePrayer("maghrib",row);
-
         });
-
     }catch(error){
-
         console.error(error);
-
     }
 }
 
@@ -714,17 +1151,11 @@ async function loadData(){
 ========================= */
 
 async function fetchPrayerTimes(){
-
     try{
-
         const url = "https://api.aladhan.com/v1/timingsByCity?city=Riyadh&country=Saudi%20Arabia&method=4";
-
         const response = await fetch(url);
-
         const data = await response.json();
-
         const t = data.data.timings;
-
         prayerTimes = {
             fajr: t.Fajr.slice(0,5),
             dhuhr: t.Dhuhr.slice(0,5),
@@ -732,61 +1163,43 @@ async function fetchPrayerTimes(){
             maghrib: t.Maghrib.slice(0,5),
             isha: t.Isha.slice(0,5)
         };
-
-        /* عرض 12 ساعة */
-
         document.getElementById("fajr-time").textContent =
             format12Hour(createDateFromTime(prayerTimes.fajr));
-
         document.getElementById("dhuhr-time").textContent =
             format12Hour(createDateFromTime(prayerTimes.dhuhr));
-
         document.getElementById("asr-time").textContent =
             format12Hour(createDateFromTime(prayerTimes.asr));
-
         document.getElementById("maghrib-time").textContent =
             format12Hour(createDateFromTime(prayerTimes.maghrib));
-
         document.getElementById("isha-time").textContent =
             format12Hour(createDateFromTime(prayerTimes.isha));
-
         updateImportantTimes();
-
+        /* بعد جلب أوقات الصلاة نتحقق من المسح اليومي */
+        checkDailyReset();
     }catch(error){
-
         console.error("Prayer API Error:",error);
-
     }
 }
 
 function updateBoxes(prefix,ms){
-
     if(ms <= 0){
-
         document.getElementById(`${prefix}-hours`).textContent = "00";
         document.getElementById(`${prefix}-minutes`).textContent = "00";
         document.getElementById(`${prefix}-seconds`).textContent = "00";
-
         return;
     }
-
     const totalSeconds = Math.floor(ms / 1000);
-
     const h = Math.floor(totalSeconds / 3600);
     const m = Math.floor((totalSeconds % 3600) / 60);
     const s = totalSeconds % 60;
-
     document.getElementById(`${prefix}-hours`).textContent = String(h).padStart(2,"0");
     document.getElementById(`${prefix}-minutes`).textContent = String(m).padStart(2,"0");
     document.getElementById(`${prefix}-seconds`).textContent = String(s).padStart(2,"0");
 }
 
 function createDateFromTime(time,nextDay=false){
-
     const now = new Date();
-
     const [h,m] = time.split(":").map(Number);
-
     const d = new Date(
         now.getFullYear(),
         now.getMonth(),
@@ -796,26 +1209,17 @@ function createDateFromTime(time,nextDay=false){
         0,
         0
     );
-
     if(nextDay){
-
         d.setDate(d.getDate()+1);
-
     }
-
     return d;
 }
 
 function format12Hour(date){
-
     let h = date.getHours();
-
     const m = date.getMinutes();
-
     h = h % 12;
-
     if(h === 0) h = 12;
-
     return `${String(h).padStart(2,"0")}:${String(m).padStart(2,"0")}`;
 }
 
@@ -824,119 +1228,53 @@ function format12Hour(date){
 ========================= */
 
 function updateImportantTimes(){
-
     if(prayerTimes.maghrib === "--:--") return;
-
     const now = new Date();
-
     let maghrib = createDateFromTime(prayerTimes.maghrib,false);
-
     let isha = createDateFromTime(prayerTimes.isha,false);
-
     let fajr = createDateFromTime(prayerTimes.fajr,true);
-
-    /*
-      إذا الوقت بعد منتصف الليل وقبل الفجر
-      يتم الحساب على ليلة الأمس
-    */
-
     const todayFajr = createDateFromTime(prayerTimes.fajr,false);
-
     if(now < todayFajr){
-
         maghrib.setDate(maghrib.getDate()-1);
-
         isha.setDate(isha.getDate()-1);
-
         fajr.setDate(fajr.getDate()-1);
     }
-
-    /* مدة الليل */
-
     const nightMs = fajr.getTime() - maghrib.getTime();
-
-    /* منتصف الليل الشرعي */
-
-    const midnight = new Date(
-        maghrib.getTime() + (nightMs / 2)
-    );
-
-    /* بداية الثلث الأخير */
-
-    const lastThird = new Date(
-        fajr.getTime() - (nightMs / 3)
-    );
-
+    const midnight = new Date(maghrib.getTime() + (nightMs / 2));
+    const lastThird = new Date(fajr.getTime() - (nightMs / 3));
     document.getElementById("midnight-time").textContent =
         format12Hour(midnight);
-
     document.getElementById("third-time").textContent =
-        format12Hour(lastThird);
-
-    /*
-    =========================
-    عداد منتصف الليل
-    يبدأ من العشاء
-    وينتهي عند منتصف الليل
-    =========================
-    */
-
+        format12Holiday(lastThird);
     let midnightDiff = 0;
-
     if(now >= isha && now <= midnight){
-
         midnightDiff = midnight.getTime() - now.getTime();
-
     }
-
-     /*
-    =========================
-    عداد الثلث الأخير
-    يبدأ من بداية الثلث الأخير
-    وينتهي عند الفجر
-    =========================
-    */
-
     let thirdDiff = 0;
-
     if(now >= lastThird && now <= fajr){
-
         thirdDiff = fajr.getTime() - now.getTime();
-
     }
-
     updateBoxes("midnight",midnightDiff);
-
     updateBoxes("third",thirdDiff);
 }
 
 function showTab(tab,button){
-
-    document.querySelectorAll(".page").forEach(page=>{
+    document.querySelectorAll(".page").forEach((page) => {
         page.classList.remove("active");
     });
-
-    document.querySelectorAll(".tab-btn").forEach(btn=>{
+    document.querySelectorAll(".tab-btn").forEach((btn) => {
         btn.classList.remove("active");
     });
-
     document.getElementById(tab).classList.add("active");
-
     button.classList.add("active");
 }
 
-window.addEventListener("scroll",()=>{
-
+window.addEventListener("scroll",() => {
     const sticky = document.querySelector(".sticky-top");
-
     if(window.scrollY > 8){
-
         sticky.classList.add("scrolled");
-
     }else{
-
         sticky.classList.remove("scrolled");
-
     }
 });
 
@@ -944,22 +1282,18 @@ window.addEventListener("scroll",()=>{
    START
 ========================= */
 
+loadTheme();
+loadToggles();
+updateDots();
 updateDate();
-
 fetchPrayerTimes();
-
 loadData();
-
 setInterval(updateDate,1000);
-
 setInterval(updateImportantTimes,1000);
-
 setInterval(loadData,30000);
-
-/* تحديث الأوقات كل ساعة */
-
 setInterval(fetchPrayerTimes,3600000);
-
+/* فحص المسح اليومي كل 30 ثانية */
+setInterval(checkDailyReset,30000);
 </script>
 
 </body>
