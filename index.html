@@ -29,7 +29,7 @@ content="روح"/>
 
 <link
 rel="apple-touch-icon"
-href="https://raw.githubusercontent.com/alaweyghr/jnazh/2af6dc1b9e5c1be338783f175a93e328410249ee/%D9%84%D9%82%D8%B7%D8%A9%20%D8%B4%D8%A7%D8%B4%D8%A9%202026-05-07%20094914%20(1).png">
+href="https://raw.githubusercontent.com/alaweyghr/jnazh/2af6dc1b9e5c1be338783f175a93e328410249ee/%D9%84%D9%82%D8%B7%D8%A9%20%D8%Bاشاة%202026-05-07%20094914%20(1).png">
 
 <link
 href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&display=swap"
@@ -92,8 +92,8 @@ transition:.25s;
 
 .sticky-top.scrolled{
 
-box-shadow:
-0 8px 12px -6px rgba(0,0,0,.08);
+box-shadow: 0 8px 12px -6px rgba(0,0,0,.08);
+
 }
 
 /* =========================
@@ -159,7 +159,6 @@ color:#A0A09D;
 
 }
 
-/* أيقونة القائمة الجانبية */
 .menu-btn {
 background: none;
 border: none;
@@ -340,8 +339,6 @@ text-align:right;
 width:100%;
 
 }
-
-
 
 .section-title h2{
 
@@ -645,7 +642,7 @@ text-align:center;
 }
 
 /* =========================
-SIDEBAR (القائمة الجانبية)
+SIDEBAR
 ========================== */
 
 .sidebar-overlay {
@@ -986,14 +983,14 @@ onclick="showTab('ward', this)">
 <div class="time-section">
 
 <div class="time-head">
-<span>منتصف الليل</span>
+<span>منتصف الليل (ينتهي)</span>
 <span id="midnight-time">--:--</span>
 </div>
 
 <div class="countdown-card">
 
 <div class="countdown-title">
-الوقت المتبقي
+الوقت المتبقي حتى نهاية الوقت
 </div>
 
 <div class="count-grid">
@@ -1022,14 +1019,14 @@ onclick="showTab('ward', this)">
 <div class="time-section">
 
 <div class="time-head">
-<span>الثلث الأخير</span>
+<span>الثلث الأخير (يبتدي)</span>
 <span id="third-time">--:--</span>
 </div>
 
 <div class="countdown-card">
 
 <div class="countdown-title">
-الوقت المتبقي
+الوقت المتبقي لانتهاء ثلث الليل
 </div>
 
 <div class="count-grid">
@@ -1190,11 +1187,9 @@ document.getElementById("isha-time").textContent = prayerTimes.isha;
 function updateBoxes(prefix,ms){
 
 if(ms <= 0){
-
 document.getElementById(`${prefix}-hours`).textContent = "00";
 document.getElementById(`${prefix}-minutes`).textContent = "00";
 document.getElementById(`${prefix}-seconds`).textContent = "00";
-
 return;
 }
 
@@ -1210,6 +1205,15 @@ document.getElementById(`${prefix}-seconds`).textContent = String(s).padStart(2,
 
 }
 
+function formatTo12Hour(dateObj) {
+  let hours = dateObj.getHours();
+  const minutes = String(dateObj.getMinutes()).padStart(2, "0");
+  const ampm = hours >= 12 ? "م" : "ص";
+  hours = hours % 12;
+  hours = hours ? hours : 12; 
+  return `${String(hours).padStart(2, "0")}:${minutes} ${ampm}`;
+}
+
 function updateImportantTimes(){
 
 const now = new Date();
@@ -1222,48 +1226,49 @@ if (ishaStr === "--:--" || fajrStr === "--:--") return;
 const ishaParts = ishaStr.split(":");
 const fajrParts = fajrStr.split(":");
 
-const isha = new Date();
-isha.setHours(parseInt(ishaParts[0]), parseInt(ishaParts[1]), 0, 0);
+// 1. وقت العشاء (تاريخ اليوم)
+const ishaTime = new Date();
+ishaTime.setHours(parseInt(ishaParts[0]), parseInt(ishaParts[1]), 0, 0);
 
-const fajr = new Date();
-fajr.setDate(fajr.getDate() + 1); 
-fajr.setHours(parseInt(fajrParts[0]), parseInt(fajrParts[1]), 0, 0);
+// 2. وقت الفجر (تاريخ اليوم التالي برمجياً لتأمين الحسابات الليلية السليمة عبر منتصف الليل)
+const fajrTime = new Date();
+fajrTime.setDate(fajrTime.getDate() + 1); 
+fajrTime.setHours(parseInt(fajrParts[0]), parseInt(fajrParts[1]), 0, 0);
 
-const nightDuration = fajr - isha;
+// 3. طول الليل الفعلي
+const nightDuration = fajrTime - ishaTime;
 
-const midnight = new Date(
-isha.getTime() + (nightDuration / 2)
-);
+// 4. حساب اللحظات الفلكية
+const midnightTime = new Date(ishaTime.getTime() + (nightDuration / 2));
+const lastThirdTime = new Date(fajrTime.getTime() - (nightDuration / 3));
 
-const lastThird = new Date(
-fajr.getTime() - (nightDuration / 3)
-);
-
-document.getElementById("midnight-time").textContent =
-midnight.toLocaleTimeString("ar-SA",{
-hour:"2-digit",
-minute:"2-digit",
-hour12:false 
-});
-
-document.getElementById("third-time").textContent =
-lastThird.toLocaleTimeString("ar-SA",{
-hour:"2-digit",
-minute:"2-digit",
-hour12:false
-});
+// طباعة العناوين بنظام الـ 12 ساعة الصريح
+document.getElementById("midnight-time").textContent = formatTo12Hour(midnightTime);
+document.getElementById("third-time").textContent = formatTo12Hour(lastThirdTime);
 
 let midnightDiff = 0;
-if(now >= isha && now < midnight){
-midnightDiff = midnight - now;
-} else if (now < isha) {
-midnightDiff = midnight - now;
+let thirdDiff = 0;
+
+// ==========================================
+// أولاً: منطق عداد منتصف الليل (ينتهي)
+// ==========================================
+if (now >= ishaTime && now < midnightTime) {
+  // يبدأ التنازل من وقت العشاء ويتجه لمنتصف الليل
+  midnightDiff = midnightTime - now;
+} else {
+  // يصفر تماماً في بقية الأوقات وعند انتهائه
+  midnightDiff = 0;
 }
 
-let thirdDiff = 0;
-if(now < fajr){
-thirdDiff = lastThird - now;
-if (thirdDiff < 0) thirdDiff = 0; 
+// ==========================================
+// ثانياً: منطق عداد الثلث الأخير (يبتدي)
+// ==========================================
+if (now >= lastThirdTime && now < fajrTime) {
+  // يبدأ التنازل فور دخول وقت الثلث الأخير وحتى أذان الفجر
+  thirdDiff = fajrTime - now;
+} else {
+  // قبل دخوله أو بعد الفجر يكون مصفر بانتظار اللحظة المناسبة
+  thirdDiff = 0;
 }
 
 updateBoxes("midnight", midnightDiff);
